@@ -9,7 +9,7 @@ COPY settings.gradle .
 COPY build.gradle .
 
 # Copy only this module's code
-COPY backend/obelix-quarry-impl/ obelix-quarry-impl/
+COPY obelix-quarry-impl/ obelix-quarry-impl/
 
 # Build only this module
 RUN ./gradlew :obelix-quarry-impl:build -x test

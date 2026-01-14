@@ -9,7 +9,7 @@ COPY settings.gradle .
 COPY build.gradle .
 
 # Copy only this module's code
-COPY backend/obelix-webshop/ obelix-webshop/
+COPY obelix-webshop/ obelix-webshop/
 
 # Build only this module
 RUN ./gradlew :obelix-webshop:build -x test

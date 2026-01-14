@@ -9,7 +9,7 @@ COPY settings.gradle .
 COPY build.gradle .
 
 # Copy only this module's code
-COPY backend/obelix-basket-impl/ obelix-basket-impl/
+COPY obelix-basket-impl/ obelix-basket-impl/
 
 # Build only this module
 RUN ./gradlew :obelix-basket-impl:build -x test
