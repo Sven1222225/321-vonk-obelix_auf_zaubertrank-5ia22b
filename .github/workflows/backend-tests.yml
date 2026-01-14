@@ -37,8 +37,8 @@ jobs:
           sleep 15  # optional: replace with HTTP health checks
 
       - name: Run Integration Tests (Webshop)
-        working-directory: obelix-webshop
-        run: ./gradlew test --info
+        working-directory: backend
+        run: ./gradlew :obelix-webshop:test --info
 
       - name: Tear Down Services
         run: docker compose -f docker-compose.test.yml down

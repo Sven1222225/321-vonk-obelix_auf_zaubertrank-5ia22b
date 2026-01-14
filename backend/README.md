@@ -8,6 +8,7 @@ The webshop consists of three microservices:
 - **Basket**
 
 
+
 # Prerequisites
 You need Grafana, Prometheus, and a Zipkin instance running in Docker.
 
