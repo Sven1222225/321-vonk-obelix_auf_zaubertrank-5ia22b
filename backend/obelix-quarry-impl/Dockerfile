@@ -3,10 +3,10 @@ FROM gradle:8.5-jdk21 AS build
 WORKDIR /app
 
 # Copy Gradle wrapper and root files
-COPY gradlew .
-COPY gradle/ gradle/
-COPY settings.gradle.kts .
-COPY build.gradle.kts .
+COPY ../gradlew .
+COPY ../gradle/ gradle/
+COPY ../settings.gradle .
+COPY build.gradle .
 
 # Copy only this module's code
 COPY obelix-quarry-impl/ obelix-quarry-impl/
