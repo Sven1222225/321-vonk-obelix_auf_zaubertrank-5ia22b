@@ -34,9 +34,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set lowercase repo owner
+      - name: Prepare Docker tags
         run: |
           echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+          echo "TAG=${GITHUB_REF_NAME//\//-}" >> $GITHUB_ENV
 
 
       # 🏷️ Docker metadata
@@ -59,7 +60,7 @@ jobs:
           context: backend
           push: true
           tags: |
-            ghcr.io/${{ env.OWNER_LC }}/backend:${{ github.ref_name }}
+            ghcr.io/${{ env.OWNER_LC }}/backend:${{ env.TAG }}
           labels: ${{ steps.meta.outputs.labels }}
 
       # 🧱 Frontend build
@@ -69,5 +70,5 @@ jobs:
           context: menhir-webshop
           push: true
           tags: |
-            ghcr.io/${{ env.OWNER_LC }}/menhir-webshop:${{ github.ref_name }}
+            ghcr.io/${{ env.OWNER_LC }}/menhir-webshop:${{ env.TAG }}
           labels: ${{ steps.meta.outputs.labels }}
