@@ -31,12 +31,12 @@ jobs:
       - name: Build & Start Backend
         run: docker compose -f docker-compose.test.yml up -d --build
 
-      - name: Wait for Webshop Service
+      - name: Wait for Backend to be Ready
         run: |
-          echo "Waiting for backend to be ready..."
           for i in {1..30}; do
-            if curl -s http://localhost:8080/actuator/health | grep -q '"status":"UP"'; then
-              echo "Backend is ready!"
+            STATUS=$(curl -s http://localhost:8080/actuator/health | jq -r .status)
+            if [ "$STATUS" = "UP" ]; then
+              echo "Backend is ready"
               exit 0
             fi
             echo "Waiting... ($i/30)"
@@ -45,6 +45,7 @@ jobs:
           echo "Backend failed to start in time"
           docker compose -f docker-compose.test.yml logs
           exit 1
+
 
       - name: Make Gradle wrapper executable
         run: chmod +x backend/gradlew
