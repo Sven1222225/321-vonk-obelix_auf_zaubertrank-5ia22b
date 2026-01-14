@@ -1,0 +1,68 @@
+name: Build & Push Images to GHCR
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+  
+  workflow_run:
+    workflows: ['Backend Tests']
+    types: [completed]
+    branches:
+      - 'main'
+
+
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 🔐 Login GHCR
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 🏷️ Docker metadata
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ghcr.io/${{ github.repository_owner }}/backend
+            ghcr.io/${{ github.repository_owner }}/frontend
+          tags: |
+            type=ref,event=branch
+            type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      # 🧱 Backend build
+      - name: Build & Push Backend
+        uses: docker/build-push-action@v5
+        with:
+          context: backend
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/backend:${{ github.ref_name }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # 🧱 Frontend build
+      - name: Build & Push Frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: menhir-webshop
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/menhir-webshop:${{ github.ref_name }}
+          labels: ${{ steps.meta.outputs.labels }}

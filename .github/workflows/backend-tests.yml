@@ -1,4 +1,4 @@
-name: Backend Tests (Gradle, Java 21)
+name: Backend Tests
 
 on:
   push:
