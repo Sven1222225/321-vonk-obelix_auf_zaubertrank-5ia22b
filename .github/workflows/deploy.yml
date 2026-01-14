@@ -40,8 +40,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/${{ github.repository_owner.toLower() }}/backend
-            ghcr.io/${{ github.repository_owner.toLower() }}/frontend
+            ghcr.io/${{ github.repository_owner }}/backend
+            ghcr.io/${{ github.repository_owner }}/frontend
           tags: |
             type=ref,event=branch
             type=sha
@@ -54,7 +54,7 @@ jobs:
           context: backend
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner.toLower() }}/backend:${{ github.ref_name }}
+            ghcr.io/${{ github.repository_owner }}/backend:${{ github.ref_name }}
           labels: ${{ steps.meta.outputs.labels }}
 
       # 🧱 Frontend build
@@ -64,5 +64,5 @@ jobs:
           context: menhir-webshop
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner.toLower() }}/menhir-webshop:${{ github.ref_name }}
+            ghcr.io/${{ github.repository_owner }}/menhir-webshop:${{ github.ref_name }}
           labels: ${{ steps.meta.outputs.labels }}
