@@ -8,6 +8,9 @@ COPY gradle/ gradle/
 COPY settings.gradle .
 COPY build.gradle .
 
+# Make the wrapper executable
+RUN chmod +x gradlew
+
 # Copy only this module's code
 COPY obelix-webshop/ obelix-webshop/
 
