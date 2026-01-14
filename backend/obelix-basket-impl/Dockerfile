@@ -3,9 +3,9 @@ FROM gradle:8.5-jdk21 AS build
 WORKDIR /app
 
 # Copy Gradle wrapper and root files
-COPY ../gradlew .
-COPY ../gradle/ gradle/
-COPY ../settings.gradle .
+COPY ./../gradlew .
+COPY ./../gradle/ gradle/
+COPY ./../settings.gradle .
 COPY build.gradle .
 
 # Copy only this module's code
