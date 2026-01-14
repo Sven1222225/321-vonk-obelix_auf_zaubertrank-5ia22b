@@ -27,5 +27,5 @@ WORKDIR /app
 # Copy built jar
 COPY --from=build /app/obelix-basket-impl/build/libs/*.jar app.jar
 
-EXPOSE 8080
+EXPOSE 8082
 ENTRYPOINT ["java", "-jar", "app.jar"]
