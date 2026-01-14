@@ -34,14 +34,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set lowercase repo owner
+        run: |
+          echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+
+
       # 🏷️ Docker metadata
       - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/${{ github.repository_owner }}/backend
-            ghcr.io/${{ github.repository_owner }}/frontend
+            ghcr.io/${{ env.OWNER_LC }}/backend
+            ghcr.io/${{ env.OWNER_LC }}/frontend
           tags: |
             type=ref,event=branch
             type=sha
@@ -54,7 +59,7 @@ jobs:
           context: backend
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/backend:${{ github.ref_name }}
+            ghcr.io/${{ env.OWNER_LC }}/backend:${{ github.ref_name }}
           labels: ${{ steps.meta.outputs.labels }}
 
       # 🧱 Frontend build
@@ -64,5 +69,5 @@ jobs:
           context: menhir-webshop
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/menhir-webshop:${{ github.ref_name }}
+            ghcr.io/${{ env.OWNER_LC }}/menhir-webshop:${{ github.ref_name }}
           labels: ${{ steps.meta.outputs.labels }}
