@@ -3,7 +3,8 @@ version: '3.9'
 services:
   obelix-quarry-impl:
     build:
-      context: ./backend/obelix-quarry-impl
+      context: ./backend
+      dockerfile: obelix-quarry-impl/Dockerfile
     ports:
       - "8081:8080"
     networks:
@@ -11,7 +12,8 @@ services:
 
   obelix-basket-impl:
     build:
-      context: ./backend/obelix-basket-impl
+      context: ./backend
+      dockerfile: obelix-basket-impl/Dockerfile
     ports:
       - "8082:8080"
     depends_on:
@@ -21,7 +23,8 @@ services:
 
   obelix-webshop:
     build:
-      context: ./backend/obelix-webshop
+      context: ./backend
+      dockerfile: obelix-webshop/Dockerfile
     ports:
       - "8080:8080"
     depends_on:
