@@ -28,13 +28,23 @@ jobs:
             ~/.gradle/wrapper
           key: gradle-${{ runner.os }}-${{ hashFiles('obelix-*/**/*.gradle*') }}
 
-      - name: Build & Start All Backend Services
+      - name: Build & Start Backend
         run: docker compose -f docker-compose.test.yml up -d --build
 
-      - name: Wait for Services to Be Healthy
+      - name: Wait for Webshop Service
         run: |
-          echo "Waiting for services..."
-          sleep 15  # optional: replace with HTTP health checks
+          echo "Waiting for backend to be ready..."
+          for i in {1..30}; do
+            if curl -s http://localhost:8080/actuator/health | grep -q '"status":"UP"'; then
+              echo "Backend is ready!"
+              exit 0
+            fi
+            echo "Waiting... ($i/30)"
+            sleep 2
+          done
+          echo "Backend failed to start in time"
+          docker compose -f docker-compose.test.yml logs
+          exit 1
 
       - name: Make Gradle wrapper executable
         run: chmod +x backend/gradlew
@@ -43,5 +53,5 @@ jobs:
         working-directory: backend
         run: ./gradlew :obelix-webshop:test --info
 
-      - name: Tear Down Services
+      - name: Tear Down Backend
         run: docker compose -f docker-compose.test.yml down
