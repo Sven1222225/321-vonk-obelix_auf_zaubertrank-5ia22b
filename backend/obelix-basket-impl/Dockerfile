@@ -14,6 +14,7 @@ RUN chmod +x gradlew
 # Copy all backend modules (so dependencies can be resolved)
 COPY obelix-common/ obelix-common/
 COPY obelix-basket-api/ obelix-basket-api/
+COPY obelix-quarry-api/ obelix-quarry-api/
 COPY obelix-basket-impl/ obelix-basket-impl/
 
 # Build only this module
