@@ -2,11 +2,11 @@ version: '3.9'
 
 services:
   obelix-common:
-    build: ./obelix-common
+    build: ./backend/obelix-common
     container_name: obelix-common
 
   obelix-quarry-api:
-    build: ./obelix-quarry-impl
+    build: ./backend/obelix-quarry-impl
     container_name: obelix-quarry-api
     ports:
       - "8081:8080"
@@ -16,7 +16,7 @@ services:
       - obelix-common
 
   obelix-basket-api:
-    build: ./obelix-basket-impl
+    build: ./backend/obelix-basket-impl
     container_name: obelix-basket-api
     ports:
       - "8082:8080"
@@ -26,7 +26,7 @@ services:
       - obelix-common
 
   obelix-webshop:
-    build: ./obelix-webshop
+    build: ./backend/obelix-webshop
     container_name: obelix-webshop
     ports:
       - "8080:8080"
