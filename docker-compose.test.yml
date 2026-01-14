@@ -2,36 +2,45 @@ version: '3.9'
 
 services:
   obelix-common:
-    build: ./backend/obelix-common
-    container_name: obelix-common
+    build:
+      context: ./obelix-common
+    ports:
+      - "8090:8080"
+    networks:
+      - backend-network
 
   obelix-quarry-api:
-    build: ./backend/obelix-quarry-impl
-    container_name: obelix-quarry-api
+    build:
+      context: ./obelix-quarry-impl
     ports:
       - "8081:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=test
     depends_on:
       - obelix-common
+    networks:
+      - backend-network
 
   obelix-basket-api:
-    build: ./backend/obelix-basket-impl
-    container_name: obelix-basket-api
+    build:
+      context: ./obelix-basket-impl
     ports:
       - "8082:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=test
     depends_on:
       - obelix-common
+    networks:
+      - backend-network
 
   obelix-webshop:
-    build: ./backend/obelix-webshop
-    container_name: obelix-webshop
+    build:
+      context: ./obelix-webshop
     ports:
       - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=test
     depends_on:
-      - obelix-quarry-api
       - obelix-basket-api
+      - obelix-quarry-api
+      - obelix-common
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
