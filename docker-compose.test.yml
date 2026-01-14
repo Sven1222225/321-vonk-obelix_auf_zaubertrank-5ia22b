@@ -1,43 +1,32 @@
 version: '3.9'
 
 services:
-  obelix-common:
+  obelix-quarry-impl:
     build:
-      context: ./obelix-common
-    ports:
-      - "8090:8080"
-    networks:
-      - backend-network
-
-  obelix-quarry-api:
-    build:
-      context: ./obelix-quarry-impl
+      context: ./backend/obelix-quarry-impl
     ports:
       - "8081:8080"
-    depends_on:
-      - obelix-common
     networks:
       - backend-network
 
-  obelix-basket-api:
+  obelix-basket-impl:
     build:
-      context: ./obelix-basket-impl
+      context: ./backend/obelix-basket-impl
     ports:
       - "8082:8080"
     depends_on:
-      - obelix-common
+      - obelix-quarry-impl
     networks:
       - backend-network
 
   obelix-webshop:
     build:
-      context: ./obelix-webshop
+      context: ./backend/obelix-webshop
     ports:
       - "8080:8080"
     depends_on:
-      - obelix-basket-api
-      - obelix-quarry-api
-      - obelix-common
+      - obelix-basket-impl
+      - obelix-quarry-impl
     networks:
       - backend-network
 
