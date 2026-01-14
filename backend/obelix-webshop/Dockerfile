@@ -1,22 +1,25 @@
+# Stage 1: build
 FROM gradle:8.5-jdk21 AS build
 WORKDIR /app
 
-# Copy Gradle wrapper + module files
+# Copy Gradle wrapper and root files
 COPY gradlew .
 COPY gradle/ gradle/
-COPY build.gradle.kts .
 COPY settings.gradle.kts .
-COPY src/ src/
+COPY build.gradle.kts .
 
-# Build this module only
-RUN ./gradlew build -x test
+# Copy only this module's code
+COPY obelix-webshop/ obelix-webshop/
 
-# Runtime
+# Build only this module
+RUN ./gradlew :obelix-webshop:build -x test
+
+# Stage 2: runtime
 FROM eclipse-temurin:21-jdk
 WORKDIR /app
 
-# Copy built JAR
-COPY --from=build /app/build/libs/*.jar app.jar
+# Copy built jar
+COPY --from=build /app/obelix-webshop/build/libs/*.jar app.jar
 
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
