@@ -4,7 +4,11 @@ import ch.bbw.obelix.quarry.api.dto.MenhirDto;
 import ch.bbw.obelix.basket.api.dto.BasketDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@ActiveProfiles("test")
 class ObelixWebshopApplicationTests {
 
 	private final WebTestClient webTestClient = WebTestClient.bindToServer().baseUrl("http://localhost:8080/").build();

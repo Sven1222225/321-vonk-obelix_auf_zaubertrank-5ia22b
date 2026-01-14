@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  obelix-common:
+    build: ./obelix-common
+    container_name: obelix-common
+
+  obelix-quarry-api:
+    build: ./obelix-quarry-impl
+    container_name: obelix-quarry-api
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+    depends_on:
+      - obelix-common
+
+  obelix-basket-api:
+    build: ./obelix-basket-impl
+    container_name: obelix-basket-api
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+    depends_on:
+      - obelix-common
+
+  obelix-webshop:
+    build: ./obelix-webshop
+    container_name: obelix-webshop
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
+    depends_on:
+      - obelix-quarry-api
+      - obelix-basket-api
