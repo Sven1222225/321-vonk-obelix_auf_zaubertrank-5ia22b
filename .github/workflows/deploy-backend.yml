@@ -34,6 +34,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Prepare image names
+        run: |
+          echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
+
       # Build & Push
       - name: Build & Push Backend Service
         uses: docker/build-push-action@v5
@@ -41,4 +45,4 @@ jobs:
           context: backend
           dockerfile: backend/${{ matrix.service }}/Dockerfile
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.service }}:${{ github.sha }}
+          tags: ghcr.io/${{ env.OWNER_LC }}/${{ matrix.service }}:${{ github.sha }}

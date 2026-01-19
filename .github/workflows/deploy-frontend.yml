@@ -32,7 +32,7 @@ jobs:
         run: |
           echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
 
-      # Frontend build
+      # Build & Push
       - name: Build & Push Frontend
         uses: docker/build-push-action@v5
         with:
