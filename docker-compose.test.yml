@@ -2,17 +2,23 @@ version: "3.9"
 
 services:
   webshop:
-    build: ./backend/obelix-webshop
+    build:
+      context: backend
+      dockerfile: backend/obelix-webshop/Dockerfile
     ports:
       - "8080:8080"
 
   quarry:
-    build: ./backend/obelix-quarry-impl
+    build:
+      context: backend
+      dockerfile: backend/obelix-quarry-impl/Dockerfile
     ports:
       - "8081:8081"
 
   basket:
-    build: ./backend/obelix-basket-impl
+    build:
+      context: backend
+      dockerfile: backend/obelix-basket-impl/Dockerfile
     ports:
       - "8082:8082"
 
