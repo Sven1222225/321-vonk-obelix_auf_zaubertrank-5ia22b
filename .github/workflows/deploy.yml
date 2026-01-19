@@ -1,6 +1,13 @@
 name: Build & Push Images to GHCR
 
 on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ".gitignore"
+      - "asciidoc/**"
+  
   workflow_run:
     workflows: ['Backend Tests']
     types: [completed]
