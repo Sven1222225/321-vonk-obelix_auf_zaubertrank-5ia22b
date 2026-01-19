@@ -3,6 +3,7 @@ FROM gradle:8.5-jdk21 AS build
 WORKDIR /app
 
 COPY gradlew .
+COPY gradle/ gradle/
 COPY settings.gradle build.gradle gradle/ ./
 
 COPY obelix-common/ obelix-common/
