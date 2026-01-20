@@ -3,7 +3,7 @@ name: 'Backend: Build & Push Images to GHCR'
 on:
   workflow_run:
     workflows: ['Backend: Tests']
-    types: [completed]
+    types: [completed, failed]
     branches:
       - 'main'
 
