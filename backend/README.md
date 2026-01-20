@@ -33,4 +33,3 @@ You need Grafana, Prometheus, and a Zipkin instance running in Docker.
     - Dashboards: Create a new dashboard, then add a visualization and select the Prometheus as data source.
     - Change the visualization type to Gauge.
     - For Metric, select "menhir_count", then save the dashboard.
-
