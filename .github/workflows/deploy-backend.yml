@@ -45,6 +45,7 @@ jobs:
       - name: Build & Push Backend Service
         uses: docker/build-push-action@v5
         with:
-          context: backend/${{ matrix.service }}
+          context: backend
+          dockerfile: ${{ matrix.service }}
           push: true
           tags: ghcr.io/${{ env.OWNER_LC }}/${{ matrix.service }}:${{ github.sha }}
